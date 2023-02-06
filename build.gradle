@@ -1,0 +1,48 @@
+plugins {
+  id 'java'
+  id 'com.github.johnrengelman.shadow' version '7.1.2'
+  id 'maven-publish'
+}
+
+repositories {
+  mavenLocal()
+  maven {
+    url = uri('https://repo.maven.apache.org/maven2/')
+  }
+}
+
+dependencies {
+  compileOnly 'org.keycloak:keycloak-server-spi-private:20.0.3'
+  compileOnly 'org.keycloak:keycloak-server-spi:20.0.3'
+  compileOnly 'org.keycloak:keycloak-services:20.0.3'
+}
+
+group = 'niroj'
+version = '1.0-SNAPSHOT'
+description = 'keycloak-2fa-email-authenticator-simple'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+shadowJar {
+  dependencies {
+    exclude(dependency('com.fasterxml.jackson.core:.*:.*'))
+    exclude(dependency('org.apache.httpcomponents:.*:.*'))
+    exclude(dependency('commons-logging:.*:.*'))
+    exclude(dependency('commons-codec:.*:.*'))
+  }
+
+  //archiveBaseName.set('keycloak-2fa-email-shadow')
+  //archiveClassifier.set('')
+  //archiveVersion.set('')
+}
+
+publishing {
+  publications {
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
+    }
+  }
+}
