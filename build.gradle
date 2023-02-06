@@ -25,6 +25,7 @@ dependencies {
     compileOnly 'org.keycloak:keycloak-server-spi-private:20.0.2'
     compileOnly 'org.keycloak:keycloak-services:20.0.2'
     compileOnly 'com.google.auto.service:auto-service:1.0.1'
+	annotationProcessor 'com.google.auto.service:auto-service:1.0.1'
 }
 
 group = 'com.mesutpiskin.keycloak'
